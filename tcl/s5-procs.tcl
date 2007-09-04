@@ -143,7 +143,7 @@ $footer
     foreach o [$pages children] {
       $o instvar page_order title page_id name title 
       set level [expr {[regsub {[.]} $page_order . page_order] + 1}]
-      set p [::Generic::CrItem instantiate -item_id 0 -revision_id $page_id]
+      set p [::xo::db::CrClass get_instance_from_db -item_id 0 -revision_id $page_id]
       $p destroy_on_cleanup
       #$p set render_adp 0
       set content [$p get_content]
@@ -167,7 +167,7 @@ $footer
     foreach o [$pages children] {
       $o instvar page_order title page_id name title 
       set level [expr {[regsub {[.]} $page_order . page_order] + 1}]
-      set p [::Generic::CrItem instantiate -item_id 0 -revision_id $page_id]
+      set p [::xo::db::CrClass get_instance_from_db -item_id 0 -revision_id $page_id]
       $p destroy_on_cleanup
 
       set menu [list]
