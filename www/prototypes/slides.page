@@ -1,0 +1,25 @@
+::xowiki::Page new -title "Slides" -text {
+{{set-parameter template_file view-default}}
+<p></p>
+>>left-col25<<
+{{toc -decoration plain -book_mode 1 -expand_all 1}}
+>><<
+
+>>right-col75<<
+<h1>Slide Overview</h1> 
+<p>Click here to start the slide show: 
+<a href="presentation?slideshow=1">default style</a>, 
+<a href="presentation?slideshow=1&style=flower">flower style</a>
+</p>
+
+<p>The title and creator of this presentation should be provided on the
+<a href="./cover?m=edit&return_url=./slides">cover</a> page.
+The footer of every slide can be provided on the 
+<a href="./footer?m=edit&return_url=./slides">footer</a> page. 
+Use <a href="./?edit-new=1&return_url=./slides">new page</a> to create a new slide and provide 
+a section numbering for ordering the slides and including it in this slide set.
+Below are the currently defined slides of this presentation.&nbsp;</p>
+<p>{{presentation}}</p>
+>><<
+
+}

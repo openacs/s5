@@ -1,0 +1,3 @@
+::xowiki::Page new -title "All slides" -text {
+{{s5}}
+}

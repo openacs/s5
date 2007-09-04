@@ -1,0 +1,11 @@
+ul.incremental {
+    color: #222222; 
+    background-color: #FFFFC4;
+}
+ul.show-first {
+    color: #222222; 
+    background-color: #FFFF4C;
+}
+ul.non-incremental {
+    background-color: #FFFFFF;
+}

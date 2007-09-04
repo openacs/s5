@@ -1,0 +1,28 @@
+ *  xowiki
+ *
+ *  Copyright (C) 2007 Gustaf Neumann, neumann@wu-wien.ac.at
+ *
+ *  Vienna University of Economics and Business Administration
+ *     Institute of Information Systems and New Media
+ *     A-1090, Augasse 2-6
+ *     Vienna, Austria
+ *
+ *  This is a BSD-Style license applicable for the files in this
+ * directory and below, except when stated explicitly different.
+ *
+ *  Permission to use, copy, modify, distribute, and sell this
+ *  software and its documentation for any purpose is hereby granted
+ *  without fee, provided that the above copyright notice appear in
+ *  all copies and that both that copyright notice and this permission
+ *  notice appear in supporting documentation. We make no
+ *  representations about the suitability of this software for any
+ *  purpose.  It is provided "as is" without express or implied
+ *  warranty.
+ *
+* The purely CSS and JavaScript based S5 package was under 
+* Creative Commons Attribution-ShareAlike 2.0 license
+* before Version 1.1, starting with version 1.1 it was placed 
+* in the public domain. The original S5 files, to which this 
+* paragraph refers to are under www/resources/flower and
+* www/resources/standard.
+
