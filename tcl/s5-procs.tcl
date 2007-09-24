@@ -9,6 +9,7 @@ ad_library {
 
 namespace eval ::s5 {
   ::xo::PackageMgr create ::s5::Package \
+      -package_key "s5" -pretty_name "S5" \
       -superclass ::xowiki::Package
 
   # To provide downward compatibility with e.g. xowiki form oacs-5-3, 
