@@ -135,7 +135,7 @@ $footer
     set output [my slideshow_header \
                     -title [$page set title] \
                     -creator [$page set creator] \
-                    -footer [$page include_portlet "footer -decoration none"] \
+                    -footer [$page include "footer -decoration none"] \
                     -s5dir "/resources/s5/$style/ui/default"]
 
     if {$cnames ne ""} {
@@ -173,7 +173,7 @@ $footer
 
       set menu [list]
       foreach b $menu_buttons {
-	set html [$p include_portlet $b]
+	set html [$p include $b]
         if {$html ne ""} {lappend menu $html}
       }
       set menu "<div style='float: right'>[join $menu {&nbsp;}]</div>"
