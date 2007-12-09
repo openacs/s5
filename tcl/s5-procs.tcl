@@ -32,14 +32,14 @@ namespace eval ::s5 {
   }
 }
 
-namespace eval ::xowiki::portlet {
+namespace eval ::xowiki::includelet {
   #
   # Create an includelet called s5, which behaves similar 
   # to the book includelet (default), or produces an S5 slide-show,
   # when slideshow flag is true.
   #
-  Class create s5 \
-      -superclass ::xowiki::Portlet \
+  ::xowiki::IncludeletClass create s5 \
+      -superclass ::xowiki::Includelet \
       -parameter {
         {__decoration plain}
         {parameter_declaration {
