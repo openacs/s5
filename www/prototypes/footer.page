@@ -1,6 +1,4 @@
 ::xowiki::Page new -title "Footer" -text {
 <h1><a href="./slides">{{get -variable title -source cover}}</a></h1>
-<h2>{{aggregator -includelet "get -variable creator"}} • 
-{{aggregator -includelet &quot;creation-date&quot;}}</h2>
-
+<h2>{{get -variable creator -source cover}} • {{creation-date -source cover}}</h2>
 }

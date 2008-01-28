@@ -1,6 +1,6 @@
 ::xowiki::Page new -title "Title of Your Presentation" -creator "Your Name here" -page_order 1.0 -text {
 Subtitle of your Presentation
 
-<strong>@creator@</strong>
+<strong>{{get -variable creator -source cover}}</strong> •
 Your Affiliation
 }

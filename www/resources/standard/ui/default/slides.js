@@ -554,5 +554,6 @@ function startup() {
 	}
 }
 
-window.onload = startup;
+YAHOO.util.Event.addListener(window, 'load', startup);
+// window.onload = startup;
 window.onresize = function(){setTimeout('fontScale()', 50);}

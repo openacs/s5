@@ -84,3 +84,17 @@ img.incremental {visibility: hidden;}
 
 li:after {content: " [" attr(class) "]"; color: #F88;}
  */
+
+
+/*** local configuration **/
+div.slide ul {
+  margin-top: 1em;
+}
+
+div.slide ul li {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+div.slide ul > ul li {
+    list-style-type: circle;
+}

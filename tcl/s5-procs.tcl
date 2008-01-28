@@ -45,8 +45,9 @@ namespace eval ::xowiki::includelet {
         {parameter_declaration {
           {-category_id}
           {-slideshow:boolean false}
+          {-pagenr 0}
           {-style standard}
-          {-menu_buttons "edit-item-button create-item-button delete-item-button"}
+          {-menu_buttons "edit copy create delete"}
         }}
       }
 
@@ -75,7 +76,7 @@ namespace eval ::xowiki::includelet {
     $pages mixin add ::xo::OrderedComposite::IndexCompare
     $pages orderby page_order
     if {$slideshow} {
-      return [my render_slideshow $pages $cnames]
+      return [my render_slideshow $pages $cnames $pagenr]
     } else {
       return [my render_overview $pages $cnames $menu_buttons]
     }
@@ -94,7 +95,6 @@ namespace eval ::xowiki::includelet {
 <meta name="defaultView" content="slideshow" />
 <meta name="controlVis" content="hidden" />
 <!-- style sheet links -->
-
 <link rel="stylesheet" href="$s5dir/slides.css" type="text/css" media="projection" id="slideProj" />
 <link rel="stylesheet" href="$s5dir/outline.css" type="text/css" media="screen" id="outlineStyle" />
 <link rel="stylesheet" href="$s5dir/print.css" type="text/css" media="print" id="slidePrint" />
@@ -109,6 +109,15 @@ img#me02 {left: 23px;}
 img#me04 {top: 44px;}
 img#me05 {top: 43px;left: 36px;}
 </style>
+
+<!-- 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/yahoo-dom-event/yahoo-dom-event.js" ></script> 
+-->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/utilities/utilities.js" ></script>
+<!-- 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/yahoo/yahoo-min.js" ></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/event/event-min.js" ></script> 
+-->
 <!-- S5 JS -->
 <script src="$s5dir/slides.js" type="text/javascript"></script>
 </head>
@@ -128,9 +137,13 @@ $footer
 }]
   }
 
-  s5 instproc render_slideshow {pages cnames} {
+  s5 instproc render_slideshow {pages cnames pagenr} {
     my instvar package_id style page
     ::xo::cc set_parameter master 0
+
+    set output {
+
+    }
 
     set output [my slideshow_header \
                     -title [$page set title] \
@@ -141,6 +154,7 @@ $footer
     if {$cnames ne ""} {
       #append output "<div class='filter'>Filtered by categories: $cnames</div>"
     }
+    set count 0
     foreach o [$pages children] {
       $o instvar page_order title page_id name title 
       set level [expr {[regsub {[.]} $page_order . page_order] + 1}]
@@ -149,11 +163,21 @@ $footer
       #$p set render_adp 0
       set content [$p get_content]
       set content [string map [list "\{\{" "\\\{\{"] $content]
-      append output "<div class='slide'>" \
+      set evenodd [expr {[incr count]%2 ? "even" : "odd"}]
+      append output "<div class='slide $evenodd'>" \
           <h1> $title </h1> \n \
           $content \
           </div> \n
     }
+    # use YAHOO event management to allow multiple event listener, and ensure, this ones is after s5's
+    append output "<script type='text/javascript'>
+      var pagenr = $pagenr;
+
+      function ngo() { go(pagenr); }
+
+      YAHOO.util.Event.addListener(window, 'load', ngo);
+    </script>\n"
+
     return $output
   }
 
@@ -163,19 +187,27 @@ $footer
     if {$cnames ne ""} {
       append output "<div class='filter'>Filtered by categories: $cnames</div>"
     }
-    set return_url [::xo::cc url]
 
+    #set return_url [::xo::cc url]
+
+    set count -1
     foreach o [$pages children] {
       $o instvar page_order title page_id name title 
+      incr count
+
       set level [expr {[regsub {[.]} $page_order . page_order] + 1}]
       set p [::xo::db::CrClass get_instance_from_db -item_id 0 -revision_id $page_id]
       $p destroy_on_cleanup
 
       set menu [list]
       foreach b $menu_buttons {
-	set html [$p include $b]
-        if {$html ne ""} {lappend menu $html}
+	if {[info command ::xowiki::includelet::$b] eq ""} {
+	  set b $b-item-button
+	}
+	set html [$p include "$b -book_mode true"]
+	if {$html ne ""} {lappend menu $html}
       }
+      set pagenr_link "presentation?slideshow=1&pagenr=$count'"
       set menu "<div style='float: right'>[join $menu {&nbsp;}]</div>"
       $p set unresolved_references 0
       #$p set render_adp 0
@@ -185,9 +217,36 @@ $footer
       regexp {^.*:([^:]+)$} $name _ anchor
       append output "<h$level class='book'>" \
           $menu \
-          "<a name='$anchor'></a>$page_order $title</h$level>" \
+          "<a name='$anchor'></a><a href='$pagenr_link'>$page_order</a> $title</h$level>" \
           $content
     }
     return $output
+  }
+}
+
+
+namespace eval ::xowiki::includelet {
+  #
+  # vertical spacer
+  #
+  ::xowiki::IncludeletClass create vspace \
+      -superclass ::xowiki::Includelet \
+      -parameter {
+        {__decoration none}
+        {parameter_declaration {
+          {-height ""}
+          {-width ""}
+        }}
+      }
+
+  vspace instproc render {} {
+    my get_parameters
+    if {$height ne ""} {
+      set height "height: $height;"
+    }
+    if {$width ne ""} {
+      set width "width: $width;"
+    }
+    return "<div style='$width $height'><!-- --></div>\n"
   }
 }
