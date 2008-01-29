@@ -1,1 +1,51 @@
-/* The following rule is necessary to have all slides appear in print! DO NOT REMOVE IT! */.slide, ul {page-break-inside: avoid; visibility: visible !important;}h1 {page-break-after: avoid;}body {font-size: 14pt; background: white;}* {color: black;}#slide0 h1 {font-size: 200%; border: none; margin: 0.5em 0 0.25em;}#slide0 h3 {margin: 0; padding: 0;}#slide0 h4 {margin: 0 0 0.5em; padding: 0;}#slide0 {margin-bottom: 3em;}h1 {border-top: 2pt solid gray;     border-bottom: 1px dotted silver;    margin-bottom: 0.7cm;    font-size: 140%;    padding-top: 10px;    padding-bottom: 10px;}.extra {background: transparent !important;}div.extra, pre.extra, .example {font-size: 10pt; color: #333;}ul.extra a {font-weight: bold;}p.example {display: none;}#header {display: none;}#footer h1 {margin: 0; border-bottom: 1px solid; color: gray; font-style: italic;}#footer h2, #controls {display: none;}/* The following rule keeps the layout stuff out of print.  Remove at your own risk! */.layout, .layout * {display: none !important;}div.slide {height: 11.55cm;}div.odd {page-break-after: always;}div.slide {font-size: 16px; font-family: sans-serif;}
+/* The following rule is necessary to have all slides appear in print! DO NOT REMOVE IT! */
+.slide, ul {page-break-inside: avoid; visibility: visible !important;}
+h1 {page-break-after: avoid;}
+
+body {font-size: 14pt; background: white;}
+* {color: black;}
+
+#slide0 h1 {font-size: 200%; border: none; margin: 0.5em 0 0.25em;}
+#slide0 h3 {margin: 0; padding: 0;}
+#slide0 h4 {margin: 0 0 0.5em; padding: 0;}
+#slide0 {margin-bottom: 3em;}
+
+h1 {border-top: 2pt solid gray; 
+    border-bottom: 1px dotted silver;
+    margin-bottom: 0.7cm;
+    font-size: 140%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.extra {background: transparent !important;}
+div.extra, pre.extra, .example {font-size: 10pt; color: #333;}
+ul.extra a {font-weight: bold;}
+p.example {display: none;}
+
+#header {display: none;}
+#footer h1 {margin: 0; border-bottom: 1px solid; color: gray; font-style: italic;}
+#footer h2, #controls {display: none;}
+
+/* The following rule keeps the layout stuff out of print.  Remove at your own risk! */
+.layout, .layout * {display: none !important;}
+
+
+/* one slide per page, well suited for landcape
+   in firefox file->page setup->landscape, 
+   since @page {size: landscape;} does not work 
+*/
+div.slide {
+    height: 11.55cm; page-break-after: always; 
+    font-size: 20pt; font-family: sans-serif;
+}
+div.slide img { font-size: 14pt;}
+div.slide ul li {
+   margin-bottom: 2ex;
+   margin-top: 2ex;
+} 
+
+/* two slides per page
+div.slide {height: 11.55cm;}
+div.odd {page-break-after: always;}
+div.slide {font-size: 16px; font-family: sans-serif;}
+   */

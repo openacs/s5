@@ -82,14 +82,14 @@ namespace eval ::xowiki::includelet {
     }
   }
 
-  s5 instproc slideshow_header {-title -creator -footer -s5dir} {
+  s5 instproc slideshow_header {-title -creator -footer -s5dir -presdate} {
     return [subst {<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>$title</title>
 <!-- metadata -->
 <meta name="generator" content="xowiki S5" />
 <meta name="version" content="\$Id\$" />
-<meta name="presdate" content="20050128" />
+<meta name="presdate" content="$presdate" />
 <meta name="author" content="$creator" />
 <!-- configuration parameters -->
 <meta name="defaultView" content="slideshow" />
@@ -141,13 +141,15 @@ $footer
     my instvar package_id style page
     ::xo::cc set_parameter master 0
 
-    set output {
-
+    set coverpage [my resolve_page_name en:cover]
+    if {$coverpage eq ""} {
+      set coverpage $page
     }
 
     set output [my slideshow_header \
-                    -title [$page set title] \
-                    -creator [$page set creator] \
+                    -title [$coverpage set title] \
+                    -creator [$coverpage set creator] \
+                    -presdate [lindex [$coverpage set last_modified] 0] \
                     -footer [$page include "footer -decoration none"] \
                     -s5dir "/resources/s5/$style/ui/default"]
 
