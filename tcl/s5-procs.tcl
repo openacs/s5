@@ -47,7 +47,7 @@ namespace eval ::xowiki::includelet {
           {-slideshow:boolean false}
           {-pagenr 0}
           {-style standard}
-          {-menu_buttons "edit copy create delete"}
+          {-menu_buttons "view edit copy create delete"}
         }}
       }
 
@@ -156,6 +156,7 @@ $footer
     if {$cnames ne ""} {
       #append output "<div class='filter'>Filtered by categories: $cnames</div>"
     }
+    ::xo::cc set_parameter __no_footer 1
     set count 0
     foreach o [$pages children] {
       $o instvar page_order title page_id name title 
@@ -201,21 +202,25 @@ $footer
       set p [::xo::db::CrClass get_instance_from_db -item_id 0 -revision_id $page_id]
       $p destroy_on_cleanup
 
+      set pagenr_link "presentation?slideshow=1&pagenr=$count"
       set menu [list]
       foreach b $menu_buttons {
 	if {[info command ::xowiki::includelet::$b] eq ""} {
 	  set b $b-item-button
 	}
+        switch $b {
+	  view-item-button {append b " -link $pagenr_link"}
+	}
 	set html [$p include "$b -book_mode true"]
 	if {$html ne ""} {lappend menu $html}
       }
-      set pagenr_link "presentation?slideshow=1&pagenr=$count'"
+
       set menu "<div style='float: right'>[join $menu {&nbsp;}]</div>"
       $p set unresolved_references 0
       #$p set render_adp 0
       set content [$p get_content]
       set content [string map [list "\{\{" "\\\{\{" "\\@" "\\\\@"] $content]
-      my log content=$content
+      #my log content=$content
       regexp {^.*:([^:]+)$} $name _ anchor
       append output "<h$level class='book'>" \
           $menu \
@@ -250,5 +255,23 @@ namespace eval ::xowiki::includelet {
       set width "width: $width;"
     }
     return "<div style='$width $height'><!-- --></div>\n"
+  }
+}
+
+
+namespace eval ::xowiki {
+  ###########################################################
+  #
+  # ::xowiki::FormField::code_listing
+  #
+  ###########################################################
+
+  Class FormField::code_listing -superclass ::xowiki::FormField::textarea -parameter {
+    {rows 20}
+    {cols 80}
+  }
+  FormField::code_listing instproc pretty_value {v} {
+    return "<pre class='code'>[api_pretty_tcl [my value]] \
+	</pre>"
   }
 }

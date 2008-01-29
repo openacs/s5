@@ -98,3 +98,6 @@ div.slide ul li {
 div.slide ul > ul li {
     list-style-type: circle;
 }
+div.slide pre.code {
+    font-size: 60%;
+}

@@ -48,4 +48,8 @@ div.slide ul li {
 div.slide {height: 11.55cm;}
 div.odd {page-break-after: always;}
 div.slide {font-size: 16px; font-family: sans-serif;}
-   */
+*/
+
+div.slide pre.code {
+    font-size: 60%;
+}
