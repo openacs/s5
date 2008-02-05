@@ -12,12 +12,6 @@ namespace eval ::s5 {
       -package_key "s5" -pretty_name "S5" \
       -superclass ::xowiki::Package
 
-  # To provide downward compatibility with e.g. xowiki form oacs-5-3, 
-  # we set the package_key via instvar.
-  # TODO: The package-key should be set via "-package_key s5" 
-  # during the above create statement
-  ::s5::Package set package_key s5 
-
   Package instproc init {} {
     set rich_text_spec {richtext(richtext),nospell,optional
       {label Content}
@@ -83,6 +77,7 @@ namespace eval ::xowiki::includelet {
   }
 
   s5 instproc slideshow_header {-title -creator -footer -s5dir -presdate} {
+    set header_stuff [::xo::Page header_stuff]
     return [subst {<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>$title</title>
@@ -109,7 +104,7 @@ img#me02 {left: 23px;}
 img#me04 {top: 44px;}
 img#me05 {top: 43px;left: 36px;}
 </style>
-
+$header_stuff
 <!-- 
 <script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/yahoo-dom-event/yahoo-dom-event.js" ></script> 
 -->
@@ -145,13 +140,7 @@ $footer
     if {$coverpage eq ""} {
       set coverpage $page
     }
-
-    set output [my slideshow_header \
-                    -title [$coverpage set title] \
-                    -creator [$coverpage set creator] \
-                    -presdate [lindex [$coverpage set last_modified] 0] \
-                    -footer [$page include "footer -decoration none"] \
-                    -s5dir "/resources/s5/$style/ui/default"]
+    set outtput ""
 
     if {$cnames ne ""} {
       #append output "<div class='filter'>Filtered by categories: $cnames</div>"
@@ -171,7 +160,15 @@ $footer
           <h1> $title </h1> \n \
           $content \
           </div> \n
-    }
+    } 
+    # eval header here to get required header stuff
+    set header [my slideshow_header \
+                    -title [$coverpage set title] \
+                    -creator [$coverpage set creator] \
+                    -presdate [lindex [$coverpage set last_modified] 0] \
+                    -footer [$page include "footer -decoration none"] \
+                    -s5dir "/resources/s5/$style/ui/default"]
+
     # use YAHOO event management to allow multiple event listener, and ensure, this ones is after s5's
     append output "<script type='text/javascript'>
       var pagenr = $pagenr;
@@ -181,7 +178,7 @@ $footer
       YAHOO.util.Event.addListener(window, 'load', ngo);
     </script>\n"
 
-    return $output
+    return $header$output
   }
 
   s5 instproc render_overview {pages cnames menu_buttons} {
