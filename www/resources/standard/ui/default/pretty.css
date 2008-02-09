@@ -101,3 +101,9 @@ div.slide ul > ul li {
 div.slide pre.code {
     font-size: 60%;
 }
+div.slide blockquote {
+    text-align: left;
+}
+div.slide pre {
+    padding: 0.2em; border: 1px dotted #ccc; min-height: 1em; margin-bottom: 1em;
+}
