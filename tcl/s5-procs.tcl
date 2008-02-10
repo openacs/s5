@@ -268,7 +268,7 @@ namespace eval ::xowiki {
     {cols 80}
   }
   FormField::code_listing instproc pretty_value {v} {
-    return "<pre class='code'>[api_pretty_tcl [my value]] \
-	</pre>"
+    [my object] do_substitutions 0
+    return "<pre class='code'>[api_pretty_tcl [my value]]</pre>"
   }
 }
