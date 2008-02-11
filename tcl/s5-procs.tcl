@@ -105,13 +105,9 @@ img#me04 {top: 44px;}
 img#me05 {top: 43px;left: 36px;}
 </style>
 $header_stuff
-<!-- 
-<script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/yahoo-dom-event/yahoo-dom-event.js" ></script> 
--->
+<script type="text/javascript" src="/resources/ajaxhelper/yui/utilities/utilities.js" ></script>
+<!--
 <script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/utilities/utilities.js" ></script>
-<!-- 
-<script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/yahoo/yahoo-min.js" ></script> 
-<script type="text/javascript" src="http://yui.yahooapis.com/2.4.1/build/event/event-min.js" ></script> 
 -->
 <!-- S5 JS -->
 <script src="$s5dir/slides.js" type="text/javascript"></script>
