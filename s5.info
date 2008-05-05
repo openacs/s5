@@ -15,7 +15,7 @@
         <maturity>0</maturity>
 
         <provides url="s5" version="0.8"/>
-        <requires url="xowiki" version="0.79"/>
+        <requires url="xowiki" version="0.87"/>
 
         <callbacks>
         </callbacks>

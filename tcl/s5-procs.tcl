@@ -252,18 +252,18 @@ namespace eval ::xowiki::includelet {
 }
 
 
-namespace eval ::xowiki {
+namespace eval ::xowiki::formfield {
   ###########################################################
   #
-  # ::xowiki::FormField::code_listing
+  # ::xowiki::formfield::code_listing
   #
   ###########################################################
 
-  Class FormField::code_listing -superclass ::xowiki::FormField::textarea -parameter {
+  Class code_listing -superclass textarea -parameter {
     {rows 20}
     {cols 80}
   }
-  FormField::code_listing instproc pretty_value {v} {
+  code_listing instproc pretty_value {v} {
     [my object] do_substitutions 0
     return "<pre class='code'>[api_pretty_tcl [my value]]</pre>"
   }
