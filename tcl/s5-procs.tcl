@@ -150,7 +150,7 @@ $footer
       $p destroy_on_cleanup
       #$p set render_adp 0
       set content [$p get_content]
-      set content [string map [list "\{\{" "\\\{\{"] $content]
+      #set content [string map [list "\{\{" "\\\{\{"] $content]
       set evenodd [expr {[incr count]%2 ? "even" : "odd"}]
       append output "<div class='slide $evenodd'>" \
           <h1> $title </h1> \n \
@@ -212,7 +212,7 @@ $footer
       $p set unresolved_references 0
       #$p set render_adp 0
       set content [$p get_content]
-      set content [string map [list "\{\{" "\\\{\{" "\\@" "\\\\@"] $content]
+      set content [string map [list "\\@" "\\\\@"] $content]
       #my log content=$content
       regexp {^.*:([^:]+)$} $name _ anchor
       append output "<h$level class='book'>" \
