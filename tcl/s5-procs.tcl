@@ -198,7 +198,7 @@ $footer
       set pagenr_link "presentation?slideshow=1&pagenr=$count"
       set menu [list]
       foreach b $menu_buttons {
-	if {[info command ::xowiki::includelet::$b] eq ""} {
+	if {[info commands ::xowiki::includelet::$b] eq ""} {
 	  set b $b-item-button
 	}
         switch $b {
