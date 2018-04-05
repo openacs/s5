@@ -46,19 +46,19 @@ namespace eval ::xowiki::includelet {
       }
 
   s5 instproc render {} {
-    my get_parameters
-    set page [my set __including_page]
+    :get_parameters
+    set page ${:__including_page}
 
-    my set package_id $package_id
-    my set style $style
-    my set page $page
+    set :package_id $package_id
+    set :style $style
+    set :page $page
 
     lappend ::xowiki_page_item_id_rendered [$page item_id] ;# prevent recursive rendering
 
     set extra_where_clause ""
     set cnames ""
     if {[info exists category_id]} {
-      lassign [my category_clause $category_id] cnames extra_where_clause
+      lassign [:category_clause $category_id] cnames extra_where_clause
     }
 
     set pages [::xowiki::Page instantiate_objects -sql \
@@ -70,9 +70,9 @@ namespace eval ::xowiki::includelet {
     $pages mixin add ::xo::OrderedComposite::IndexCompare
     $pages orderby page_order
     if {$slideshow} {
-      return [my render_slideshow $pages $cnames $pagenr]
+      return [:render_slideshow $pages $cnames $pagenr]
     } else {
-      return [my render_overview $pages $cnames $menu_buttons]
+      return [:render_overview $pages $cnames $menu_buttons]
     }
   }
 
@@ -129,10 +129,10 @@ $footer
   }
 
   s5 instproc render_slideshow {pages cnames pagenr} {
-    my instvar package_id style page
+    :instvar package_id style page
     ::xo::cc set_parameter master 0
 
-    set coverpage [my resolve_page_name en:cover]
+    set coverpage [:resolve_page_name en:cover]
     if {$coverpage eq ""} {
       set coverpage $page
     }
@@ -158,7 +158,7 @@ $footer
           </div> \n
     } 
     # eval header here to get required header stuff
-    set header [my slideshow_header \
+    set header [:slideshow_header \
                     -title [$coverpage set title] \
                     -creator [$coverpage set creator] \
                     -presdate [lindex [$coverpage set last_modified] 0] \
@@ -178,7 +178,7 @@ $footer
   }
 
   s5 instproc render_overview {pages cnames menu_buttons} {
-    my instvar package_id page
+    :instvar package_id page
     set output ""
     if {$cnames ne ""} {
       append output "<div class='filter'>Filtered by categories: $cnames</div>"
@@ -240,7 +240,7 @@ namespace eval ::xowiki::includelet {
       }
 
   vspace instproc render {} {
-    my get_parameters
+    :get_parameters
     if {$height ne ""} {
       set height "height: $height;"
     }
@@ -269,8 +269,8 @@ if {![::xotcl::Object isclass ::xowiki::formfield::code_listing]} {
       {cols 80}
     }
     code_listing instproc pretty_value {v} {
-      [my object] do_substitutions 0
-      return "<pre class='code'>[api_pretty_tcl [my value]]</pre>"
+      [:object] do_substitutions 0
+      return "<pre class='code'>[api_pretty_tcl [:value]]</pre>"
     }
   }
 }
