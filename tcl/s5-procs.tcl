@@ -58,7 +58,7 @@ namespace eval ::xowiki::includelet {
     set extra_where_clause ""
     set cnames ""
     if {[info exists category_id]} {
-      foreach {cnames extra_where_clause} [my category_clause $category_id] break
+      lassign [my category_clause $category_id] cnames extra_where_clause
     }
 
     set pages [::xowiki::Page instantiate_objects -sql \
