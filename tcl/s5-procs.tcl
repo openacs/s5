@@ -196,7 +196,7 @@ $footer
       $p destroy_on_cleanup
 
       set pagenr_link "presentation?slideshow=1&pagenr=$count"
-      set menu [list]
+      set menu {}
       foreach b $menu_buttons {
 	if {[info commands ::xowiki::includelet::$b] eq ""} {
 	  set b $b-item-button
